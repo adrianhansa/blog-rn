@@ -23,7 +23,7 @@ const Login = ({ navigation }) => {
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
           console.log(values);
-          navigation.navigate("Welcome");
+          navigation.navigate("Profile");
         }}
         validationSchema={validationSchema}
       >
@@ -55,8 +55,13 @@ const Login = ({ navigation }) => {
                 style={styles.buttonWrapper}
                 onPress={props.handleSubmit}
               >
-                <Text style={styles.login}>Login</Text>
+                <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
+              <Text>Don't have an account ?</Text>
+              <Button
+                title="Register"
+                onPress={() => navigation.navigate("Register")}
+              />
             </>
           );
         }}
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "crimson",
   },
-  login: {
+  buttonText: {
     fontSize: 20,
     color: "white",
     fontWeight: "700",

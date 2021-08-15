@@ -38,6 +38,16 @@ const AppNavigation = () => {
           component={Login}
           options={{ headerShown: false }}
         />
+        <BottomTabs.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <BottomTabs.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
       </BottomTabs.Navigator>
     </NavigationContainer>
   );
