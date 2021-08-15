@@ -4,7 +4,7 @@ import {
   REGISTER_SUCCESS,
 } from "../constants/userConstants";
 
-export const register = (state = {}, action) => {
+export const registerReducer = (state = {}, action) => {
   switch (action.type) {
     case REGISTER_REQUEST:
       return { loading: true };
@@ -17,7 +17,7 @@ export const register = (state = {}, action) => {
   }
 };
 
-export const login = (state = {}, action) => {
+export const loginReducer = (state = {}, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return { loading: true };
