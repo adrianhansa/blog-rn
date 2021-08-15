@@ -1,8 +1,10 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT,
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -14,7 +16,9 @@ export const register = (info) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
     const { data } = await axios.post(`${BASE_URL}/users/register`, info);
+    await AsyncStorage.setItem("token", data.token);
     dispatch({ type: REGISTER_SUCCESS, payload: data });
+    dispatch({ type: LOGIN_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: REGISTER_FAIL,
@@ -28,7 +32,8 @@ export const register = (info) => async (dispatch) => {
 export const login = (info) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-    const { data } = await axios.post(`${BASE_URL}/users/register`, info);
+    const { data } = await axios.post(`${BASE_URL}/users/login`, info);
+    await AsyncStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -38,4 +43,10 @@ export const login = (info) => async (dispatch) => {
         : error.message,
     });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  const { data } = await axion.get(`${BASE_URL}/users/logout`);
+  await AsyncStorage.removeItem("token");
+  dispatch({ type: LOGOUT, payload: data });
 };

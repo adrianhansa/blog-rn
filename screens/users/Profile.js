@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwtDecode from "jwt-decode";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+  const { user, loading, error } = useSelector((state) => state.loggedInUser);
+  const getData = AsyncStorage.getItem("token");
+
+  useEffect(() => {
+    if (!user.isAuth) {
+      navigation.navigate("Login");
+    }
+  }, [loading]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+      <Text style={styles.title}>XX</Text>
     </View>
   );
 };

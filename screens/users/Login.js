@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
-  View,
+  ScrollView,
   Text,
   TextInput,
   Button,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/actions/userActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const validationSchema = yup.object({
   email: yup.string().required(),
@@ -16,57 +20,68 @@ const validationSchema = yup.object({
 });
 
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = async () => await AsyncStorage.getItem("token");
+    token().then((r) => {
+      if (r) {
+        navigation.navigate("Profile");
+      }
+    });
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => {
-          console.log(values);
-          navigation.navigate("Profile");
-        }}
-        validationSchema={validationSchema}
-      >
-        {(props) => {
-          return (
-            <>
-              <TextInput
-                value={props.values.email}
-                placeholder="Email"
-                onChangeText={props.handleChange("email")}
-                onBlur={props.handleBlur("email")}
-                style={styles.inputText}
-              />
-              <Text style={styles.error}>
-                {props.touched.email && props.errors.email}
-              </Text>
-              <TextInput
-                value={props.values.email}
-                placeholder="Email"
-                onChangeText={props.handleChange("password")}
-                onBlur={props.handleBlur("password")}
-                secureTextEntry={true}
-                style={styles.inputText}
-              />
-              <Text style={styles.error}>
-                {props.touched.password && props.errors.password}
-              </Text>
-              <TouchableOpacity
-                style={styles.buttonWrapper}
-                onPress={props.handleSubmit}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-              <Text>Don't have an account ?</Text>
-              <Button
-                title="Register"
-                onPress={() => navigation.navigate("Register")}
-              />
-            </>
-          );
-        }}
-      </Formik>
-    </View>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <ScrollView>
+        <Text style={styles.title}>Login</Text>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => {
+            dispatch(login(values));
+            navigation.navigate("Profile");
+          }}
+          validationSchema={validationSchema}
+        >
+          {(props) => {
+            return (
+              <>
+                <TextInput
+                  value={props.values.email}
+                  placeholder="Email"
+                  onChangeText={props.handleChange("email")}
+                  onBlur={props.handleBlur("email")}
+                  style={styles.inputText}
+                />
+                <Text style={styles.error}>
+                  {props.touched.email && props.errors.email}
+                </Text>
+                <TextInput
+                  value={props.values.password}
+                  placeholder="Email"
+                  onChangeText={props.handleChange("password")}
+                  onBlur={props.handleBlur("password")}
+                  secureTextEntry={true}
+                  style={styles.inputText}
+                />
+                <Text style={styles.error}>
+                  {props.touched.password && props.errors.password}
+                </Text>
+                <TouchableOpacity
+                  style={styles.buttonWrapper}
+                  onPress={props.handleSubmit}
+                >
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+                <Text>Don't have an account ?</Text>
+                <Button
+                  title="Register"
+                  onPress={() => navigation.navigate("Register")}
+                />
+              </>
+            );
+          }}
+        </Formik>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
