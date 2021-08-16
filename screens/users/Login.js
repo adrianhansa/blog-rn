@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -30,7 +31,10 @@ const Login = ({ navigation }) => {
     });
   }, []);
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <ScrollView>
         <Text style={styles.title}>Login</Text>
         <Formik

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -22,7 +23,10 @@ const validationSchema = yup.object({
 const Register = ({ navigation }) => {
   const dispatch = useDispatch();
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <ScrollView>
         <Text style={styles.title}>Register</Text>
         <Formik
