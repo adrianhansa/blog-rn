@@ -40,8 +40,12 @@ const Login = ({ navigation }) => {
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={(values) => {
-            dispatch(login(values));
-            navigation.navigate("Profile");
+            dispatch(login(values)).then((result) => {
+              console.log(result.isAuth);
+              if (result.isAuth) {
+                navigation.navigate("Profile");
+              }
+            });
           }}
           validationSchema={validationSchema}
         >

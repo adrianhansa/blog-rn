@@ -5,18 +5,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 
 const Profile = ({ navigation }) => {
-  const { user, loading, error } = useSelector((state) => state.loggedInUser);
+  const { user } = useSelector((state) => state.auth);
   const getData = AsyncStorage.getItem("token");
-
-  useEffect(() => {
-    if (!user.isAuth) {
-      navigation.navigate("Login");
-    }
-  }, [loading]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>XX</Text>
+      <Text style={styles.title}>Welcome, {user.fullName}</Text>
     </View>
   );
 };

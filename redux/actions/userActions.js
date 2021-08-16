@@ -16,9 +16,9 @@ export const register = (info) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
     const { data } = await axios.post(`${BASE_URL}/users/register`, info);
-    await AsyncStorage.setItem("token", data.token);
+    await AsyncStorage.setItem("token", data);
     dispatch({ type: REGISTER_SUCCESS, payload: data });
-    dispatch({ type: LOGIN_SUCCESS, payload: data });
+    return data;
   } catch (error) {
     dispatch({
       type: REGISTER_FAIL,
@@ -35,6 +35,7 @@ export const login = (info) => async (dispatch) => {
     const { data } = await axios.post(`${BASE_URL}/users/login`, info);
     await AsyncStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data });
+    return data;
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
