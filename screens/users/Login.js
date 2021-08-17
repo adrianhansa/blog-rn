@@ -24,67 +24,67 @@ const Login = ({ navigation }) => {
   const auth = useSelector((state) => state.auth);
   useEffect(() => {
     if (auth.user.isAuth) {
+      console.log(auth);
       navigation.navigate("Profile");
     }
-  }, [auth]);
+  }, []);
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView>
-        <Text style={styles.title}>Login</Text>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => {
-            dispatch(login(values)).then((result) => {
-              if (result.isAuth) {
-                navigation.navigate("Profile");
-              }
-            });
-          }}
-          validationSchema={validationSchema}
-        >
-          {(props) => {
-            return (
-              <>
-                <TextInput
-                  value={props.values.email}
-                  placeholder="Email"
-                  onChangeText={props.handleChange("email")}
-                  onBlur={props.handleBlur("email")}
-                  style={styles.inputText}
-                />
-                <Text style={styles.error}>
-                  {props.touched.email && props.errors.email}
-                </Text>
-                <TextInput
-                  value={props.values.password}
-                  placeholder="Email"
-                  onChangeText={props.handleChange("password")}
-                  onBlur={props.handleBlur("password")}
-                  secureTextEntry={true}
-                  style={styles.inputText}
-                />
-                <Text style={styles.error}>
-                  {props.touched.password && props.errors.password}
-                </Text>
-                <TouchableOpacity
-                  style={styles.buttonWrapper}
-                  onPress={props.handleSubmit}
-                >
-                  <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <Text>Don't have an account ?</Text>
-                <Button
-                  title="Register"
-                  onPress={() => navigation.navigate("Register")}
-                />
-              </>
-            );
-          }}
-        </Formik>
-      </ScrollView>
+      <Text style={styles.title}>Login</Text>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={(values) => {
+          dispatch(login(values)).then((result) => {
+            if (result.isAuth) {
+              console.log(result);
+              navigation.navigate("Profile");
+            }
+          });
+        }}
+        validationSchema={validationSchema}
+      >
+        {(props) => {
+          return (
+            <>
+              <TextInput
+                value={props.values.email}
+                placeholder="Email"
+                onChangeText={props.handleChange("email")}
+                onBlur={props.handleBlur("email")}
+                style={styles.inputText}
+              />
+              <Text style={styles.error}>
+                {props.touched.email && props.errors.email}
+              </Text>
+              <TextInput
+                value={props.values.password}
+                placeholder="Email"
+                onChangeText={props.handleChange("password")}
+                onBlur={props.handleBlur("password")}
+                secureTextEntry={true}
+                style={styles.inputText}
+              />
+              <Text style={styles.error}>
+                {props.touched.password && props.errors.password}
+              </Text>
+              <TouchableOpacity
+                style={styles.buttonWrapper}
+                onPress={props.handleSubmit}
+              >
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+              <Text>Don't have an account ?</Text>
+              <Button
+                title="Register"
+                onPress={() => navigation.navigate("Register")}
+              />
+            </>
+          );
+        }}
+      </Formik>
     </KeyboardAvoidingView>
   );
 };

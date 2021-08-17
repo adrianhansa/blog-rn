@@ -17,7 +17,7 @@ const Profile = ({ navigation }) => {
         setFullName(jwtDecode(result).fullName);
       })
       .catch((error) => console.log(error));
-  }, [fullName]);
+  }, [fullName, user]);
 
   return (
     <View style={styles.container}>
