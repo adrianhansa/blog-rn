@@ -13,7 +13,6 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/userActions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const validationSchema = yup.object({
   email: yup.string().required(),
@@ -22,14 +21,12 @@ const validationSchema = yup.object({
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   useEffect(() => {
-    const token = async () => await AsyncStorage.getItem("token");
-    token().then((r) => {
-      if (r) {
-        navigation.navigate("Profile");
-      }
-    });
-  }, []);
+    if (auth.user.isAuth) {
+      navigation.navigate("Profile");
+    }
+  }, [auth]);
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -41,7 +38,6 @@ const Login = ({ navigation }) => {
           initialValues={{ email: "", password: "" }}
           onSubmit={(values) => {
             dispatch(login(values)).then((result) => {
-              console.log(result.isAuth);
               if (result.isAuth) {
                 navigation.navigate("Profile");
               }

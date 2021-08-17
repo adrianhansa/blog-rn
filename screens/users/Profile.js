@@ -1,16 +1,38 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
+import { logout } from "../../redux/actions/userActions";
 
 const Profile = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const getData = AsyncStorage.getItem("token");
+  const [fullName, setFullName] = useState("");
+  const getData = async () => await AsyncStorage.getItem("token");
+
+  useEffect(() => {
+    getData()
+      .then((result) => {
+        setFullName(jwtDecode(result).fullName);
+      })
+      .catch((error) => console.log(error));
+  }, [fullName]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome, {user.fullName}</Text>
+      {user.isAuth ? (
+        <Text style={styles.title}>Welcome, {fullName}</Text>
+      ) : (
+        <Text>Hello</Text>
+      )}
+      <Button
+        onPress={() => {
+          dispatch(logout());
+          navigation.navigate("Login");
+        }}
+        title="Logout"
+      />
     </View>
   );
 };

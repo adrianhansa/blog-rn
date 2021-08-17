@@ -17,7 +17,7 @@ export const register = (info) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
     const { data } = await axios.post(`${BASE_URL}/users/register`, info);
     await AsyncStorage.setItem("token", data);
-    dispatch({ type: REGISTER_SUCCESS, payload: data });
+    dispatch({ type: REGISTER_SUCCESS, payload: data.token });
     return data;
   } catch (error) {
     dispatch({
@@ -47,7 +47,7 @@ export const login = (info) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  const { data } = await axion.get(`${BASE_URL}/users/logout`);
   await AsyncStorage.removeItem("token");
+  const { data } = await axios.get(`${BASE_URL}/users/logout`);
   dispatch({ type: LOGOUT, payload: data });
 };
