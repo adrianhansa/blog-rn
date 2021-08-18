@@ -4,6 +4,7 @@ import {
   GET_ALL_POSTS_SUCCESS,
   GET_MY_POSTS_FAIL,
   GET_MY_POSTS_REQUEST,
+  GET_MY_POSTS_SUCCESS,
 } from "../constants/postConstants";
 
 const initialState = {
