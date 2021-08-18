@@ -13,10 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const getAllPosts = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_POSTS_REQUEST });
-    const token = await AsyncStorage.getItem("token");
-    const { data } = await axios.get(`${BASE_URL}/posts/all`, {
-      headers: { token },
-    });
+    const { data } = await axios.get(`${BASE_URL}/posts/all`);
     dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
