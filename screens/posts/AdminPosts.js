@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getMyPosts } from "../../redux/actions/postActions";
+import PostCard from "./PostCard";
 
 const AdminPosts = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,9 @@ const AdminPosts = ({ navigation }) => {
           />
           <FlatList
             data={posts}
-            renderItem={({ item }) => <Text>{item.title}</Text>}
+            renderItem={({ item }) => (
+              <PostCard navigation={navigation} post={item} />
+            )}
             keyExtractor={(item) => item._id}
           />
         </>
