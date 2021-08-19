@@ -29,11 +29,6 @@ const Welcome = ({ navigation }) => {
       ) : (
         <Text>{error}</Text>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <View style={styles.loginWrapper}>
-          <Text style={styles.loginText}>Login</Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 };
