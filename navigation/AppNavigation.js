@@ -10,6 +10,7 @@ import Register from "../screens/users/Register";
 import Profile from "../screens/users/Profile";
 import AdminPosts from "../screens/posts/AdminPosts";
 import CreatePost from "../screens/posts/CreatePost";
+import EditPost from "../screens/posts/EditPost";
 import { useSelector } from "react-redux";
 
 const BottomTabs = createBottomTabNavigator();
@@ -22,6 +23,7 @@ const AppNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen name="AdminPosts" component={AdminPosts} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
+        <Stack.Screen name="EditPost" component={EditPost} />
       </Stack.Navigator>
     );
   };

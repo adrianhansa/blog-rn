@@ -14,7 +14,7 @@ const PostCard = ({ post, navigation }) => {
           <Text style={styles.button}>Delete</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => console.log("Edit post")}
+          onPress={() => navigation.navigate("EditPost", { slug: post.slug })}
           style={styles.buttonWrapper}
         >
           <Text style={styles.button}>Edit</Text>
