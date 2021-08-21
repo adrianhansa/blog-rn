@@ -1,14 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../redux/actions/postActions";
 
 const PostCard = ({ post, navigation }) => {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.content}>{post.content}</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
-          onPress={() => console.log("Delete post")}
+          onPress={() => dispatch(deletePost(post.slug))}
           style={styles.buttonWrapper}
         >
           <Text style={styles.button}>Delete</Text>
