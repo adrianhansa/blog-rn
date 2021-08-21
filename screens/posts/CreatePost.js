@@ -43,6 +43,7 @@ const CreatePost = ({ navigation }) => {
                 onChangeText={props.handleChange("title")}
                 onBlur={props.handleBlur("title")}
                 placeholder="Post title"
+                style={styles.titleInput}
               />
               <Text style={styles.error}>
                 {props.touched.title && props.errors.title}
@@ -53,11 +54,18 @@ const CreatePost = ({ navigation }) => {
                 onBlur={props.handleBlur("content")}
                 placeholder="Post content"
                 multiline
+                style={styles.contentInput}
               />
               <Text style={styles.error}>
                 {props.touched.content && props.errors.content}
               </Text>
-              <Button title="Create Post" onPress={props.handleSubmit} />
+              <View style={styles.buttonWrapper}>
+                <Button
+                  title="Create Post"
+                  onPress={props.handleSubmit}
+                  style={styles.buttonText}
+                />
+              </View>
             </>
           );
         }}
@@ -67,11 +75,24 @@ const CreatePost = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  title: {},
-  buttonWrapper: {},
-  buttonText: {},
-  error: {},
+  container: { flex: 1, padding: 15 },
+  title: { marginBottom: 20, textAlign: "center", fontSize: 30, color: "blue" },
+  titleInput: { borderColor: "grey", borderWidth: 1, padding: 10 },
+  contentInput: {
+    borderColor: "grey",
+    borderWidth: 1,
+    padding: 10,
+    minHeight: 100,
+    height: "auto",
+  },
+  buttonWrapper: {
+    width: "100%",
+    backgroundColor: "lightblue",
+    borderRadius: 10,
+    paddingVertical: 8,
+  },
+  buttonText: { color: "green" },
+  error: { color: "red" },
 });
 
 export default CreatePost;
