@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  CREATE_POST_FAIL,
+  CREATE_POST_REQUEST,
+  CREATE_POST_SUCCESS,
   GET_ALL_POSTS_FAIL,
   GET_ALL_POSTS_REQUEST,
   GET_ALL_POSTS_SUCCESS,
@@ -36,6 +39,26 @@ export const getMyPosts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_MY_POSTS_FAIL,
+      payload: error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const createPost = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_POST_REQUEST });
+    const token = await AsyncStorage.getItem("token");
+    const result = await axios.post(`${BASE_URL}/posts`, post, {
+      headers: { token },
+    });
+    dispatch({ type: CREATE_POST_SUCCESS, payload: result.data });
+    const data = await axios.get(`${BASE_URL}/posts`);
+    dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CREATE_POST_FAIL,
       payload: error.response.data.message
         ? error.response.data.message
         : error.message,
