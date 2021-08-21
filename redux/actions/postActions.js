@@ -60,8 +60,10 @@ export const createPost = (post) => async (dispatch) => {
       headers: { token },
     });
     dispatch({ type: CREATE_POST_SUCCESS, payload: result.data });
-    const data = await axios.get(`${BASE_URL}/posts/all`);
-    dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data });
+    const { data } = await axios.get(`${BASE_URL}/posts/my-posts`, {
+      headers: { token },
+    });
+    dispatch({ type: GET_MY_POSTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: CREATE_POST_FAIL,

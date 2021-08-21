@@ -27,7 +27,9 @@ const PostCard = ({ post, navigation }) => {
           onPress={() => console.log("Publish post")}
           style={styles.buttonWrapper}
         >
-          <Text style={styles.button}>Publish</Text>
+          <Text style={styles.button}>
+            {post.published ? "Unpublish" : "Publish"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
