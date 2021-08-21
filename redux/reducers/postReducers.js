@@ -11,6 +11,9 @@ import {
   GET_MY_POSTS_FAIL,
   GET_MY_POSTS_REQUEST,
   GET_MY_POSTS_SUCCESS,
+  GET_MY_POST_FAIL,
+  GET_MY_POST_REQUEST,
+  GET_MY_POST_SUCCESS,
   GET_POST_FAIL,
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
@@ -62,6 +65,19 @@ export const getPostReducer = (state = {}, action) => {
     case GET_POST_SUCCESS:
       return { loading: false, success: true, post: action.payload };
     case GET_POST_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getMyPostReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_MY_POST_REQUEST:
+      return { loading: true };
+    case GET_MY_POST_SUCCESS:
+      return { loading: false, success: true, post: action.payload };
+    case GET_MY_POST_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:
       return state;

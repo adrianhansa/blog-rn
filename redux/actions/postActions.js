@@ -12,6 +12,9 @@ import {
   GET_MY_POSTS_FAIL,
   GET_MY_POSTS_REQUEST,
   GET_MY_POSTS_SUCCESS,
+  GET_MY_POST_FAIL,
+  GET_MY_POST_REQUEST,
+  GET_MY_POST_SUCCESS,
   GET_POST_FAIL,
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
@@ -22,7 +25,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const getAllPosts = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_POSTS_REQUEST });
-    const { data } = await axios.get(`${BASE_URL}/posts/all`);
+    const { data } = await axios.get(`${BASE_URL}/posts`);
     dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -38,7 +41,7 @@ export const getMyPosts = () => async (dispatch) => {
   try {
     dispatch({ type: GET_MY_POSTS_REQUEST });
     const token = await AsyncStorage.getItem("token");
-    const { data } = await axios.get(`${BASE_URL}/posts/my-posts`, {
+    const { data } = await axios.get(`${BASE_URL}/admin/posts`, {
       headers: { token },
     });
     dispatch({ type: GET_MY_POSTS_SUCCESS, payload: data });
@@ -60,7 +63,7 @@ export const createPost = (post) => async (dispatch) => {
       headers: { token },
     });
     dispatch({ type: CREATE_POST_SUCCESS, payload: result.data });
-    const { data } = await axios.get(`${BASE_URL}/posts/my-posts`, {
+    const { data } = await axios.get(`${BASE_URL}/admin/posts`, {
       headers: { token },
     });
     dispatch({ type: GET_MY_POSTS_SUCCESS, payload: data });
@@ -78,10 +81,29 @@ export const getPost = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_POST_REQUEST });
     const { data } = await axios.get(`${BASE_URL}/posts/${slug}`);
+    console.log(data);
     dispatch({ type: GET_POST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: GET_POST_FAIL,
+      payload: error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const getMyPost = (slug) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MY_POST_REQUEST });
+    const token = await AsyncStorage.getItem("token");
+    const { data } = await axios.get(`${BASE_URL}/admin/posts/${slug}`, {
+      headers: { token },
+    });
+    dispatch({ type: GET_MY_POST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_MY_POST_FAIL,
       payload: error.response.data.message
         ? error.response.data.message
         : error.message,
@@ -97,7 +119,7 @@ export const deletePost = (slug) => async (dispatch) => {
       headers: { token },
     });
     dispatch({ type: DELETE_POST_SUCCESS, payload: result.data });
-    const { data } = await axios.get(`${BASE_URL}/posts/my-posts`, {
+    const { data } = await axios.get(`${BASE_URL}/admin/posts/`, {
       headers: { token },
     });
     dispatch({ type: GET_MY_POSTS_SUCCESS, payload: data });

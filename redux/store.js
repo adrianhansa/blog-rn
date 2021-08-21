@@ -9,6 +9,7 @@ import {
   getPostReducer,
   createPostReducer,
   deletePostReducer,
+  getMyPostReducer,
 } from "./reducers/postReducers";
 
 const middleware = composeWithDevTools(applyMiddleware(thunk));
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   createdPost: createPostReducer,
   deletePost: deletePostReducer,
   postDetails: getPostReducer,
+  myPostDetails: getMyPostReducer,
 });
 
 const store = createStore(rootReducer, middleware);
