@@ -18,6 +18,9 @@ import {
   GET_POST_FAIL,
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
+  TOGGLE_PUBLISH_POST_FAIL,
+  TOGGLE_PUBLISH_POST_REQUEST,
+  TOGGLE_PUBLISH_POST_SUCCESS,
 } from "../constants/postConstants";
 import { BASE_URL } from "../constants/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,6 +39,19 @@ export const getAllPosts = () => async (dispatch) => {
     });
   }
 };
+
+export const togglePublishPost = (slug,published)=>async (dispatch)=>{
+  try{
+    dispatch({type:TOGGLE_PUBLISH_POST_REQUEST})
+    const token = await AsyncStorage.getItem('token')
+    const result = await axios.put(`${BASE_URL}/adim/posts/${slug}`,published,{headers:{token}})
+    dispatch({type: TOGGLE_PUBLISH_POST_SUCCESS, payload: result.data})
+    const {data} = await axios.get(`${BASE_URL}/adim/posts`,{headers:{token}})
+    dispatch({type:GET_MY_POSTS_SUCCESS,payload:data})
+  }catch(error){
+    dispatch({type:TOGGLE_PUBLISH_POST_FAIL,payload:error.response.data.message?error.response.data.message:error.message})
+  }
+}
 
 export const getMyPosts = () => async (dispatch) => {
   try {

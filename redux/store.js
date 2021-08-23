@@ -10,6 +10,7 @@ import {
   createPostReducer,
   deletePostReducer,
   getMyPostReducer,
+  togglePublishPostReducer
 } from "./reducers/postReducers";
 
 const middleware = composeWithDevTools(applyMiddleware(thunk));
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   deletePost: deletePostReducer,
   postDetails: getPostReducer,
   myPostDetails: getMyPostReducer,
+  publishedPost: togglePublishPostReducer
 });
 
 const store = createStore(rootReducer, middleware);

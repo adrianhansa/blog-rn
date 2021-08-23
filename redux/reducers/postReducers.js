@@ -17,6 +17,9 @@ import {
   GET_POST_FAIL,
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
+  TOGGLE_PUBLISH_POST_FAIL,
+  TOGGLE_PUBLISH_POST_REQUEST,
+  TOGGLE_PUBLISH_POST_SUCCESS,
 } from "../constants/postConstants";
 
 export const getAllPostsReducer = (state = [], action) => {
@@ -31,6 +34,19 @@ export const getAllPostsReducer = (state = [], action) => {
       return state;
   }
 };
+
+export const togglePublishPostReducer = (state={},action)=>{
+  switch(action.type){
+    case TOGGLE_PUBLISH_POST_REQUEST:
+      return {loading: true}
+    case TOGGLE_PUBLISH_POST_SUCCESS:
+      return {loading: false, success: true, post: action.payload}
+    case TOGGLE_PUBLISH_POST_FAIL:
+      return {loading: false, success: false, error: action.payload}
+    default:
+      return state
+  }
+}
 
 export const getMyPostsReducer = (state = [], action) => {
   switch (action.type) {

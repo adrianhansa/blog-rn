@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../redux/actions/postActions";
+import { deletePost,togglePublishPost } from "../../redux/actions/postActions";
 
 const PostCard = ({ post, navigation }) => {
   const dispatch = useDispatch();
@@ -24,7 +24,11 @@ const PostCard = ({ post, navigation }) => {
           <Text style={styles.button}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => console.log("Publish post")}
+          onPress={() => {
+            console.log(post.published)
+            dispatch(togglePublishPost(post.slug,!post.published))
+            console.log(!post.published,post.slug)
+          }}
           style={styles.buttonWrapper}
         >
           <Text style={styles.button}>
