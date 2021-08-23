@@ -13,7 +13,7 @@ const Welcome = ({ navigation }) => {
   const dispatch = useDispatch();
   const { allPosts, loading, error } = useSelector((state) => state.allPosts);
   useEffect(() => {
-    dispatch(getAllPosts());
+      dispatch(getAllPosts());
   }, [dispatch]);
   return (
     <View style={styles.container}>

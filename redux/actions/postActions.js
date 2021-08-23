@@ -44,10 +44,13 @@ export const togglePublishPost = (slug,published)=>async (dispatch)=>{
   try{
     dispatch({type:TOGGLE_PUBLISH_POST_REQUEST})
     const token = await AsyncStorage.getItem('token')
-    const result = await axios.put(`${BASE_URL}/adim/posts/${slug}`,published,{headers:{token}})
+    const result = await axios.put(`${BASE_URL}/admin/posts/${slug}`,{published},{headers:{token}})
     dispatch({type: TOGGLE_PUBLISH_POST_SUCCESS, payload: result.data})
-    const {data} = await axios.get(`${BASE_URL}/adim/posts`,{headers:{token}})
+    
+    const {data} = await axios.get(`${BASE_URL}/admin/posts`,{headers:{token}})
     dispatch({type:GET_MY_POSTS_SUCCESS,payload:data})
+    const res = await axios.get(`${BASE_URL}/posts`)
+    dispatch({type:GET_ALL_POSTS_SUCCESS,payload:res.data})
   }catch(error){
     dispatch({type:TOGGLE_PUBLISH_POST_FAIL,payload:error.response.data.message?error.response.data.message:error.message})
   }
