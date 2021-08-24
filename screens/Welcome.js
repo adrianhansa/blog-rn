@@ -13,7 +13,7 @@ const Welcome = ({ navigation }) => {
   const dispatch = useDispatch();
   const { allPosts, loading, error } = useSelector((state) => state.allPosts);
   useEffect(() => {
-      dispatch(getAllPosts());
+    dispatch(getAllPosts());
   }, [dispatch]);
   return (
     <View style={styles.container}>
@@ -23,7 +23,16 @@ const Welcome = ({ navigation }) => {
       ) : allPosts ? (
         <FlatList
           data={allPosts}
-          renderItem={({ item }) => <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("PostScreen",{slug:item.slug})}><Text>{item.title}</Text></TouchableOpacity>}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate("PostScreen", { slug: item.slug })
+              }
+            >
+              <Text>{item.title}</Text>
+            </TouchableOpacity>
+          )}
           keyExtractor={(item) => item._id}
         />
       ) : (
@@ -38,7 +47,7 @@ const styles = StyleSheet.create({
   title: { color: "crimson", fontSize: 40, textAlign: "center" },
   loginWrapper: { width: "80%", padding: 20 },
   loginText: { fontSize: 24 },
-  card:{borderColor: 'grey', borderWidth:1, marginBottom:20, padding: 10 }
+  card: { borderColor: "grey", borderWidth: 1, marginBottom: 20, padding: 10 },
 });
 
 export default Welcome;

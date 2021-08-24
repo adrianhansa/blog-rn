@@ -25,6 +25,14 @@ const AppNavigation = () => {
         <Stack.Screen name="AdminPosts" component={AdminPosts} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="EditPost" component={EditPost} />
+      </Stack.Navigator>
+    );
+  };
+
+  const WelcomeStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="WelcomeScreen" component={Welcome} />
         <Stack.Screen name="PostScreen" component={PostScreen} />
       </Stack.Navigator>
     );
@@ -52,31 +60,24 @@ const AppNavigation = () => {
       >
         <BottomTabs.Screen
           name="Welcome"
-          component={Welcome}
+          component={WelcomeStack}
           options={{ headerShown: false }}
         />
-        {user.isAuth ? (
-          <>
-            <BottomTabs.Screen
-              name="Admin"
-              component={AdminStack}
-              options={{ headerShown: false }}
-            />
-            <BottomTabs.Screen
-              name="Profile"
-              component={Profile}
-              options={{ headerShown: false }}
-            />
-          </>
-        ) : (
-          <>
-            <BottomTabs.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-          </>
-        )}
+        <BottomTabs.Screen
+          name="Admin"
+          component={AdminStack}
+          options={{ headerShown: false }}
+        />
+        <BottomTabs.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
+        <BottomTabs.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
       </BottomTabs.Navigator>
     </NavigationContainer>
   );
