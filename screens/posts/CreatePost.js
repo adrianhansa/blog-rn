@@ -29,7 +29,6 @@ const CreatePost = ({ navigation }) => {
         onSubmit={(values) => {
           dispatch(createPost(values))
             .then(() => {
-              console.log(values);
               navigation.navigate("AdminPosts");
             })
             .catch((error) => console.log(error));

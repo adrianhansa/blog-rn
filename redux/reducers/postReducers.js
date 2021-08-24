@@ -20,6 +20,9 @@ import {
   TOGGLE_PUBLISH_POST_FAIL,
   TOGGLE_PUBLISH_POST_REQUEST,
   TOGGLE_PUBLISH_POST_SUCCESS,
+  UPDATE_POST_FAIL,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
 } from "../constants/postConstants";
 
 export const getAllPostsReducer = (state = [], action) => {
@@ -112,3 +115,16 @@ export const deletePostReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const updatePostReducer = (state={}, action)=>{
+  switch(action.type){
+    case UPDATE_POST_REQUEST:
+      return {loading: true}
+    case UPDATE_POST_SUCCESS:
+      return {loading: false, success: true, post:action.payload}
+    case UPDATE_POST_FAIL:
+      return {loading: false, success: false, error: action.payload}
+    default:
+      return state
+  }
+}
