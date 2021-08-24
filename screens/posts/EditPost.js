@@ -26,12 +26,13 @@ const EditPost = ({ navigation, route }) => {
             initialValues={{
               title: post.title,
               content: post.content,
-              publish: post.publish,
+              published: post.published,
             }}
             schemaValidation={schemaValidation}
             onSubmit={(values) => {
               dispatch(updatePost(route.params.slug,values))
-                .then(() => {
+                .then((res) => {
+                  console.log(res)
                   navigation.navigate("AdminPosts");
                 })
                 .catch((error) => console.log(error));

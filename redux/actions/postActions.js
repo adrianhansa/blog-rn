@@ -114,7 +114,6 @@ export const getPost = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_POST_REQUEST });
     const { data } = await axios.get(`${BASE_URL}/posts/${slug}`);
-    console.log(data);
     dispatch({ type: GET_POST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -168,10 +167,9 @@ export const deletePost = (slug) => async (dispatch) => {
 
 export const updatePost = (slug, updatedPost) => async (dispatch) => {
   try {
-  } catch (error) {
     dispatch({type:UPDATE_POST_REQUEST})
     const token = await AsyncStorage.getItem('token')
-    const result = await axios.put(`${BASE_URL}/admin/posts/${slug}`,updatedPost,{headers:{token}})
+    const result = await axios.put(`${BASE_URL}/posts/${slug}`,updatedPost,{headers:{token}})
     dispatch({type:UPDATE_POST_SUCCESS, payload: result.data})
     const { data } = await axios.get(`${BASE_URL}/admin/posts`, {
       headers: { token },
@@ -179,6 +177,8 @@ export const updatePost = (slug, updatedPost) => async (dispatch) => {
     dispatch({ type: GET_MY_POSTS_SUCCESS, payload: data });
     const res = await axios.get(`${BASE_URL}/posts`);
     dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: res.data });
+    return result.data
+  } catch (error) {
     dispatch({
       type: UPDATE_POST_FAIL,
       payload: error.response.data.message
