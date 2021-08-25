@@ -12,24 +12,31 @@ const PostScreen = ({ route }) => {
     dispatch(getPost(route.params.slug));
   }, [dispatch]);
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {loading ? (
         <Text>Loading...</Text>
       ) : success ? (
-        <View style={styles.postContainer}>
+        <ScrollView style={styles.postContainer}>
           <Text style={styles.title}>{post.title}</Text>
-        </View>
+          <Text style={styles.author}>
+            {post.author.fullName}, {post.author.email}
+          </Text>
+        </ScrollView>
       ) : (
         <Text>{error}</Text>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  postContainer: {},
-  title: { fontSize: 50 },
+  container: { flex: 1, alignItems: "center", padding: 5 },
+  postContainer: {
+    borderColor: "brown",
+    borderWidth: 1,
+    width: "100%",
+  },
+  title: { fontSize: 28, textAlign: "center" },
 });
 
 export default PostScreen;
